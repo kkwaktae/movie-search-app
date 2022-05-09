@@ -1,8 +1,13 @@
 @use '/src/styles/constants/colors';
 
 .app {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  padding: 5%;
+}
+
+ul li {
+  list-style: none;
 }
