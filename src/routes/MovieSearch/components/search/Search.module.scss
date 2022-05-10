@@ -1,0 +1,57 @@
+@use '/src/styles/mixins/flexbox';
+
+nav {
+  flex-direction: column;
+  width: 100%;
+  height: 140px;
+  padding-top: 5%;
+
+  .navContainer {
+    width: 100%;
+    height: 100%;
+
+    .searchBar {
+      width: 100%;
+      @include flexbox.flexbox(center, center);
+      margin: 5% 0;
+
+      .search {
+        width: 75%;
+        padding-left: 16px;
+        margin-right: 5%;
+        line-height: 32px;
+        color: #999999;
+        background: #333333;
+        border-right: none;
+        border-radius: 8px;
+        outline: none;
+        transition: all 0.4s ease;
+
+        &:focus {
+          padding-left: 24px;
+          color: #cccccc;
+          background: #222222;
+
+          &::placeholder {
+            color: transparent;
+          }
+        }
+      }
+
+      .clickBtn {
+        width: 20%;
+        line-height: 32px;
+        color: #999999;
+        background: #333333;
+        border-radius: 8px;
+        outline: none;
+        transition: all 0.3s ease;
+
+        &:hover {
+          color: #cccccc;
+          background: #222222;
+        }
+      }
+    }
+  }
+}
