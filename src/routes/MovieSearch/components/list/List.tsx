@@ -1,37 +1,99 @@
-import styles from './List.module.scss';
+import { useEffect, useRef, useState } from 'react';
+
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { getMovieAPI } from 'services/movieSearch';
+import { displayModal, searchState, favoriteMovie } from 'store/search';
+import { IAPIParams, IHandleButtonTarget } from 'types/movieSearch';
+
+import styles from './list.module.scss';
 
 interface Props {
-  isResult: boolean;
+  scrollState: number;
+  scrollBoxHeight: number;
 }
 
-const List = ({ isResult }: Props) => {
+const List = ({ scrollState, scrollBoxHeight }: Props): JSX.Element => {
+  const [data, setData] = useRecoilState(searchState);
+  const [page, setPage] = useState<number>(data.page);
+  const [isLoading, setIsLoading] = useState(false);
+  const setModalState = useSetRecoilState(displayModal);
+  const setFavoriteMovieState = useSetRecoilState(favoriteMovie);
+
+  const movieList = data.dataList;
+
+  const listRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    const APIParam: IAPIParams = {
+      apikey: `${process.env.REACT_APP_API_KEY}`,
+      s: data.s,
+      page,
+    };
+    getMovieAPI(APIParam).then((res) => {
+      if (res.data) setData({ ...data, page, dataList: [...movieList, ...res.data.Search] });
+    });
+  }, [page]);
+
+  if (listRef.current !== null) {
+    const ulTagHeight = listRef.current.offsetHeight;
+    if (scrollState + scrollBoxHeight + 50 >= ulTagHeight && !isLoading) {
+      setTimeout(() => {
+        setIsLoading(true);
+        setPage((prev) => prev + 1);
+        setIsLoading(false);
+      }, 500);
+    }
+  }
+
+  const handleShowModal = (e: IHandleButtonTarget): void => {
+    setModalState((prev) => !prev);
+    const { id } = e.currentTarget.dataset;
+    const favoriteMovieObj = {
+      name: data.dataList[Number(id)].Title,
+      dataId: Number(id),
+      data: data.dataList[Number(id)],
+    };
+
+    setFavoriteMovieState(favoriteMovieObj);
+  };
+
+  const movieInfo = movieList.map((movie, idx) => {
+    const key = `movie-info-${idx + 1}`;
+
+    return (
+      <li key={key} className={styles.list}>
+        <div className={styles.movieImg}>
+          <img src={movie.Poster} alt='movie-img' />
+        </div>
+        <div className={styles.movieContents}>
+          <div className={styles.movieTitle}>
+            <p>Title</p> {movie.Title}
+          </div>
+          <div className={styles.movieYear}>
+            <p>Year</p> {movie.Year}
+          </div>
+          <div className={styles.movieType}>
+            <p>Genre</p> {movie.Type}
+          </div>
+          <button className={styles.favor} type='button' data-id={idx} onClick={handleShowModal}>
+            favorite
+          </button>
+        </div>
+      </li>
+    );
+  });
+
   return (
-    <main>
-      <div className={styles.container}>
-        {isResult ? (
-          <ul className={styles.listBox}>
-            <li className={styles.list}>
-              <div className={styles.movieImg}>포스터 이미지</div>
-              <div className={styles.movieContents}>
-                <div className={styles.movieTitle}>제목</div>
-                <div className={styles.movieYear}>연도</div>
-                <div className={styles.movieType}>타입</div>
-              </div>
-            </li>
-            <li className={styles.list}>
-              <div className={styles.movieImg}>포스터 이미지</div>
-              <div className={styles.movieContents}>
-                <div className={styles.movieTitle}>제목</div>
-                <div className={styles.movieYear}>연도</div>
-                <div className={styles.movieType}>타입</div>
-              </div>
-            </li>
-          </ul>
-        ) : (
-          <p className={styles.nothing}>검색 결과가 없습니다.</p>
-        )}
-      </div>
-    </main>
+    <div className={styles.mainContainer}>
+      {movieList.length > 0 ? (
+        <ul className={styles.listBox} ref={listRef}>
+          {movieInfo}
+          {movieInfo && <li className={styles.loader}>loading...</li>}
+        </ul>
+      ) : (
+        <h2 className={styles.nothing}>검색 결과가 없습니다.</h2>
+      )}
+    </div>
   );
 };
 

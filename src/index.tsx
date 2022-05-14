@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './styles/index.scss';
 import Routes from './routes';
 import reportWebVitals from './reportWebVitals';
-import { RecoilRoot, atom, selector, useRecoilState, useRecoilValue } from 'recoil';
-import { textState } from './store/atom';
+import { RecoilRoot } from 'recoil';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(

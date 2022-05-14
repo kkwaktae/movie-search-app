@@ -1,0 +1,25 @@
+@use '/src/styles/mixins/flexbox';
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 10px;
+
+  .listBox {
+    width: 100%;
+
+    .list {
+      @include flexbox.flexbox(around, center);
+      padding-bottom: 20px;
+      border-bottom: 1px solid #999999;
+
+      + .list {
+        margin-top: 20px;
+      }
+
+      .movieContents {
+        @include flexbox.flexbox(around, center);
+      }
+    }
+  }
+}

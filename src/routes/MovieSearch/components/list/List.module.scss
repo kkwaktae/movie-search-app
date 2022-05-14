@@ -1,33 +1,76 @@
 @use '/src/styles/mixins/flexbox';
 
-main {
+.mainContainer {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  height: 360px;
-  overflow: scroll;
-  color: #131313;
-  background: #dddddd;
+  height: 100%;
+  padding-top: 0;
 
-  .container {
-    display: flex;
-    flex-direction: column;
-    padding: 20px 10px;
+  .listBox {
+    width: 100%;
 
-    .listBox {
-      width: 100%;
+    .list {
+      padding: 20px;
+      @include flexbox.flexbox(around, center);
+      padding-bottom: 20px;
+      border-bottom: 1px solid #999999;
 
-      .list {
-        @include flexbox.flexbox(around, center);
-        padding-bottom: 20px;
-        border-bottom: 1px solid #999999;
+      .movieImg {
+        width: 50%;
 
-        + .list {
-          margin-top: 20px;
+        img {
+          width: 100%;
+          vertical-align: bottom;
+          border: none;
         }
+      }
 
-        .movieContents {
-          @include flexbox.flexbox(around, center);
+      .movieContents {
+        width: 50%;
+        padding: 20px;
+        padding-left: 40px;
+        font-size: 12px;
+
+        p {
+          font-size: 16px;
+          font-weight: bold;
+          line-height: 24px;
+
+          + p {
+            margin-top: 12px;
+          }
+        }
+      }
+
+      .favor {
+        width: 80%;
+        margin: 0 auto;
+        margin-top: 30px;
+        line-height: 30px;
+        text-align: center;
+        border: 1px solid #131313;
+        transition: all 0.6s ease;
+
+        &:hover {
+          color: #eeeeee;
+          background: #333333;
         }
       }
     }
+
+    .loader {
+      font-weight: bold;
+      line-height: 48px;
+      text-align: center;
+    }
+  }
+
+  .nothing {
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+    font-weight: bold;
+    @include flexbox.flexbox(center, center);
   }
 }

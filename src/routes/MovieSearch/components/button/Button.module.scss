@@ -1,36 +1,25 @@
 @use '/src/styles/mixins/flexbox';
 
-footer {
-  @include flexbox.flexbox(center, center);
-  height: 60px;
+.tab {
+  width: 100%;
+  height: 100%;
+  padding-top: 16px;
+  @include flexbox.flexbox(around, center);
 
-  .tab {
-    width: 100%;
+  li {
+    width: 45%;
     height: 100%;
-    padding-top: 16px;
+    font-size: 14px;
+    font-weight: 100;
+    color: #ffffff;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s ease;
     @include flexbox.flexbox(around, center);
 
-    a {
-      width: 45%;
-      height: 100%;
-      text-decoration: none;
-
-      li {
-        width: 100%;
-        height: 100%;
-        font-size: 14px;
-        font-weight: 100;
-        color: #ffffff;
-        letter-spacing: 0.05em;
-        cursor: pointer;
-        border-radius: 8px;
-        transition: all 0.2s ease;
-        @include flexbox.flexbox(around, center);
-
-        &:hover {
-          background: #333333;
-        }
-      }
+    &:hover {
+      background: #333333;
     }
   }
 }

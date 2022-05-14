@@ -1,21 +1,12 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import styles from './Routes.module.scss'
-import Main from './MovieSearch/Main'
-import Favorite from './MovieSearch/Favorite'
-
-// import Weather from './Weathers'
+import styles from './Routes.module.scss';
+import Main from './MovieSearch/Main';
 
 const App = () => {
   return (
     <div className={styles.app}>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Main />} />
-          <Route path='/favorite' element={<Favorite />} />
-        </Routes>
-      </BrowserRouter>
+      <Main />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

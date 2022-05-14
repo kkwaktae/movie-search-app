@@ -1,10 +1,94 @@
 @use '/src/styles/mixins/flexbox';
 
 .wrapper {
+  position: relative;
   width: 360px;
   height: 600px;
   padding: 20px;
+  padding-top: 160px;
   color: #ffffff;
   background: #131313;
   border-radius: 32px;
+
+  header {
+    position: absolute;
+    top: 30%;
+    left: calc(50% - 144px);
+    flex-direction: column;
+    width: 80%;
+    height: 140px;
+    transition: all 1s ease;
+  }
+
+  .header {
+    top: 40px;
+  }
+
+  main {
+    z-index: 8;
+    width: 100%;
+    height: 360px;
+    overflow: scroll;
+    color: #131313;
+    visibility: hidden;
+    background: #dddddd;
+    opacity: 0;
+    transition: all 0.6s ease 1s;
+  }
+
+  .main {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  footer {
+    z-index: 10;
+    width: 100%;
+    height: 60px;
+    @include flexbox.flexbox(center, center);
+  }
+
+  .modalwrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 50%);
+    border-radius: 32px;
+
+    &.display {
+      display: block;
+    }
+
+    .modal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 220px;
+      height: 100px;
+      background: #131313;
+      border-radius: 12px;
+      transform: translate(-50%, -50%);
+      @include flexbox.flexbox(center, center);
+
+      button {
+        padding: 10px;
+        color: #aaaaaa;
+        background: #131313;
+        border: 1px solid #eeeeee;
+        transition: all 0.2s ease;
+
+        + button {
+          margin-left: 16px;
+        }
+
+        &:hover {
+          color: #eeeeee;
+          background: #222222;
+        }
+      }
+    }
+  }
 }
