@@ -48,12 +48,7 @@ const List = ({ scrollState, scrollBoxHeight }: Props): JSX.Element => {
   const handleShowModal = (e: IHandleButtonTarget): void => {
     setModalState((prev) => !prev);
     const { id } = e.currentTarget.dataset;
-    const favoriteMovieObj = {
-      name: data.dataList[Number(id)].Title,
-      dataId: Number(id),
-      data: data.dataList[Number(id)],
-    };
-
+    const favoriteMovieObj = data.dataList[Number(id)];
     setFavoriteMovieState(favoriteMovieObj);
   };
 

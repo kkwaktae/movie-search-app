@@ -13,14 +13,15 @@ import styles from './Main.module.scss';
 const Main = () => {
   const [scrollState, setScrollState] = useState(0);
   const [scrollBoxHeight, setScrollBoxHeight] = useState(0);
-  const isMain = useRecoilValue(componentState);
-  const isResult = useRecoilValue(searchResult);
-  const [modalState, setModalState] = useRecoilState(displayModal);
-  const favoriteMovieState = useRecoilValue(favoriteMovie);
   const [addFavorite, setAddFavorite] = useState<Array<object>>([]);
 
+  const [modalState, setModalState] = useRecoilState(displayModal);
+  const isMain = useRecoilValue(componentState);
+  const isResult = useRecoilValue(searchResult);
+  const favoriteMovieState = useRecoilValue(favoriteMovie);
+
   useEffect(() => {
-    window.localStorage.setItem('favorite', JSON.stringify(addFavorite));
+    localStorage.setItem('favorite', JSON.stringify(addFavorite));
   }, [addFavorite]);
 
   const handleScroll = (e: UIEvent<HTMLDivElement>): void => {
